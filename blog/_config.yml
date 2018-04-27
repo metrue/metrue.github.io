@@ -73,9 +73,44 @@ pagination_dir: page
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: landscape
+theme: typescript
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type:
+
+# Generator json content
+jsonContent:
+  meta: false
+  keywords: false
+  pages:
+    title: true
+    slug: false
+    date: false
+    updated: false
+    comments: false
+    path: false
+    link: false
+    permalink: true
+    excerpt: false
+    keywords: false
+    text: true
+    raw: false
+    content: false
+  posts:
+    title: true
+    slug: false
+    date: false
+    updated: false
+    comments: false
+    path: false
+    link: false
+    permalink: true
+    excerpt: false
+    keywords: false
+    text: true
+    raw: false
+    content: false
+    categories: false
+    tags: false
