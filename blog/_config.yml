@@ -3,20 +3,20 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: Hexo
-subtitle:
-description:
-keywords:
-author: John Doe
-language:
-timezone:
+title: 漫碼
+subtitle: 渴望被關進一間充滿漫畫 & 代碼的小黑屋
+description: 美麗的太陽照常升起 苦痛的人們依舊歇斯底裏
+keywords: 
+author: Lision
+language: zh-cn
+timezone: UTC
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: http://yoursite.com
+url: https://lision.me
 root: /
-permalink: :year/:month/:day/:title/
-permalink_defaults:
+permalink: :category/:title
+permalink_defaults: 
 
 # Directory
 source_dir: source
@@ -26,16 +26,16 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render:
+skip_render: 
 
 # Writing
 new_post_name: :title.md # File name of new posts
 default_layout: post
 titlecase: false # Transform title into titlecase
 external_link: true # Open external links in new tab
-filename_case: 0
+filename_case: 1
 render_drafts: false
-post_asset_folder: false
+post_asset_folder: true
 relative_link: false
 future: true
 highlight:
@@ -77,8 +77,11 @@ theme: typescript
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-deploy:
-  type:
+deploy: 
+  type: git
+  repo: git@github.com:Lision/Lision.github.io.git
+  branch: master
+  message: Boo!
 
 # Generator json content
 jsonContent:
