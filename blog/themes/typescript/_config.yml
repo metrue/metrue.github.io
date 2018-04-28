@@ -1,7 +1,7 @@
 # Meta
-description: A minimal hexo theme.
-keywords: hexo,theme,typescript,otakism,otaku
-site_desc: otaku keeps alive
+description: 美麗的太陽照常升起 苦痛的人們依舊歇斯底裏
+keywords: ios,objective-c,swift,python,javascript,otaku,lision
+site_desc: comics & code
 
 # Navigation
 navigation:
@@ -36,7 +36,7 @@ search:
 # Miscellaneous
 google_analytics:
 favicon: /favicon.png
-author_url: http://rakugaki.me
+author_url: https://lision.me
 
 # Less
 less:
@@ -45,21 +45,21 @@ less:
 # use url, not username
 social:
 - slug: email
-  url: #mailto:i@artifact.me
+  url: mailto:lisionmail@gmail.com
 - slug: github
-  url: https://github.com/artchen
+  url: https://github.com/Lision
 - slug: twitter
-  url: https://twitter.com/otakism
+  url: https://twitter.com/LisionChat
 - slug: rss
-	url: /atom.xml
+	url: # /atom.xml
 - slug: google
-  url: https://plus.google.com/+ArtChenOtakism/posts
+  url: # https://plus.google.com/+ArtChenOtakism/posts
 - slug: facebook
   url: # https://www.facebook.com/zanchoret
 - slug: linkedin
   url: # https://www.linkedin.com/in/buzun
 - slug: sina-weibo
-  url: http://weibo.com/otakism/
+  url: https://weibo.com/lisioncode
 - slug: tumblr
   url: # http://artchen.tumblr.com
 - slug: dribbble
