@@ -7,7 +7,7 @@ tags:
 categories:
 ---
 
-{% asset_img oc-class-properties.jpg %}
+{% asset_img oc_class_properties.jpg %}
 
 ## 前言
 
@@ -70,7 +70,7 @@ So，Apple 决定从零开始写 C，C++，Objective-C 的编译器 Clang。
 
 ## Objective-C Class Properties
 
-{% asset_img oc-feature.jpg %}
+{% asset_img oc_feature.jpg %}
 
 Objective-C Class Properties 作为 Objective-C 新语法特性在 [WWDC2016 What's New in LLVM](https://developer.apple.com/videos/play/wwdc2016/405/) 中公示，表示 Xcode 8 之后可以使用这一新语法特性。
 
@@ -120,7 +120,7 @@ static NSString *_someString = nil;
 
 笔者在做项目组件下沉时，遇到一个问题，正好适用于 Objective-C Class Properties 发挥：将要下沉的组件库中某系统类 Categroy 引用了业务层某方法。
 
-{% asset_img before-decoupling.png %}
+{% asset_img before_decoupling.png %}
 
 业务层应该依赖于将要下沉的组件，而组件既然要下沉就不应该再反过来依赖上层业务实现！
 
@@ -130,7 +130,7 @@ static NSString *_someString = nil;
 
 > Note: 在 Categroy 中写 Objective-C Class Properties 需要使用 Runtime 关联方法。
 
-{% asset_img after-decoupling.png %}
+{% asset_img after_decoupling.png %}
 
 ## 总结
 
