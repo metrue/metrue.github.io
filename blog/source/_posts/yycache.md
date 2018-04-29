@@ -3,8 +3,11 @@ title: 从 YYCache 源码 Get 到如何设计一个优秀的缓存
 comments: true
 date: 2017-10-30 11:07:56
 updated: 2017-10-30 11:07:56
-tags:
-categories:
+tags: 
+- yykit
+- yycache
+categories: 
+- ios
 ---
 
 {% asset_img how_to_design_a_good_cache.jpg %}

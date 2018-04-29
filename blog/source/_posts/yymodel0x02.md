@@ -3,8 +3,11 @@ title: 揭秘 YYModel 的魔法 0x02
 comments: true
 date: 2017-11-19 10:58:59
 updated: 2017-11-19 10:58:59
-tags:
-categories:
+tags: 
+- yykit
+- yymodel
+categories: 
+- ios
 ---
 
 {% asset_img design_model_0x02.jpg %}
@@ -497,7 +500,7 @@ static void ModelSetValueForProperty(__unsafe_unretained id model,
 
 额...考虑到 NSDictionary to Model 的整个过程代码量不小，我花了一些时间将其逻辑总结归纳为一张图：
 
-{% asset_img d2m.jpg %}
+{% asset_img d2m.png %}
 
 希望可以尽自己的努力让文章的表述变得更直白。
 

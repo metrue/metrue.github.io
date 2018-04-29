@@ -3,8 +3,11 @@ title: 揭秘 YYModel 的魔法 0x01
 comments: true
 date: 2017-11-12 10:53:01
 updated: 2017-11-12 10:53:01
-tags:
-categories:
+tags: 
+- yykit
+- yymodel
+categories: 
+- ios
 ---
 
 {% asset_img design_model_0x01.jpg %}

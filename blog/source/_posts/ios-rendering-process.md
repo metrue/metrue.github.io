@@ -3,11 +3,12 @@ title: 深入理解 iOS Rendering Process
 comments: true
 date: 2018-04-15 18:23:51
 updated: 2018-04-15 18:23:51
-tags:
-categories:
+tags: 
+- wwdc
+- opengl
+categories: 
+- ios
 ---
-
-# 深入理解 iOS Rendering Process
 
 {% asset_img rendering.jpg %}
 

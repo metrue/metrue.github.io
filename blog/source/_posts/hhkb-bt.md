@@ -3,11 +3,11 @@ title: HHKB 开箱留念
 comments: true
 date: 2018-04-05 17:16:56
 updated: 2018-04-05 17:16:56
-tags:
-categories:
+tags: 
+- keyboard
+categories: 
+- chat
 ---
-
-# HHKB 开箱留念
 
 {% asset_img hhkb_c_00.jpg %}
 

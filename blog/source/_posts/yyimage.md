@@ -3,8 +3,11 @@ title: YYImage 设计思路，实现细节剖析
 comments: true
 date: 2017-12-10 10:42:19
 updated: 2017-12-10 10:42:19
-tags:
-categories:
+tags: 
+- yykit
+- yyimage
+categories: 
+- ios
 ---
 
 {% asset_img yyimage_h.jpg %}

@@ -3,8 +3,11 @@ title: 深入剖析 WebViewJavascriptBridge
 comments: true
 date: 2017-12-23 10:16:15
 updated: 2017-12-23 10:16:15
-tags:
-categories:
+tags: 
+- jsbridge
+- hybrid
+categories: 
+- ios
 ---
 
 {% asset_img merry_ch.jpg %}
