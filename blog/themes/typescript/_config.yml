@@ -8,9 +8,9 @@ navigation:
 - name: Home
   slug: home
   url: /
-- name: About
-  slug: about
-  url: /about
+#- name: About
+  #slug: about
+  #url: /about
 - name: Archives
   slug: archives
   url: /archives

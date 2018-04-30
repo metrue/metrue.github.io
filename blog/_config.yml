@@ -15,7 +15,7 @@ timezone: UTC
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: https://lision.me
 root: /
-permalink: :category/:title/
+permalink: :title/
 permalink_defaults: 
 
 # Directory
@@ -106,7 +106,7 @@ jsonContent:
     slug: false
     date: false
     updated: false
-    comments: false
+    comments: true
     path: false
     link: false
     permalink: true
@@ -117,3 +117,6 @@ jsonContent:
     content: false
     categories: false
     tags: false
+
+# Disqus
+disqus_shortname: lision-me
