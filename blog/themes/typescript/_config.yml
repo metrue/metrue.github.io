@@ -35,7 +35,7 @@ search:
 
 # Miscellaneous
 google_analytics:
-favicon: /images/favicon.png
+favicon: /favicon.png
 author_url: https://lision.me
 
 # Less
