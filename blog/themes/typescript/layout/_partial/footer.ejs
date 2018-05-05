@@ -2,12 +2,18 @@
   
   <% if (theme.search.enable === true) { %>
 	<div class="search">
-	  <form name="searchform" id="searchform" class="u-search-form">
-	    <input type="text" id="searchinput" class="u-search-input" placeholder="Looking for something?" />
-	    <button type="submit" id="u-search-btn-submit" class="u-search-btn-submit">
-	      <span class="icon icon-search"></span>
-	    </button>
-	  </form>
+	  <script>
+      (function() {
+        var cx = '<%= theme.search.google_engine_id %>';
+        var gcse = document.createElement('script');
+        gcse.type = 'text/javascript';
+        gcse.async = true;
+        gcse.src = 'https://cse.google.com/cse.js?cx=' + cx;
+        var s = document.getElementsByTagName('script')[0];
+        s.parentNode.insertBefore(gcse, s);
+      })();
+    </script>
+    <gcse:searchbox-only></gcse:searchbox-only>
 	</div>
 	<% } %>
 

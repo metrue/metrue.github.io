@@ -20,8 +20,8 @@ search:
   enable: true
   service: google # google/hexo/algolia/azure/baidu
   # google 
-  google_api_key:
-  google_engine_id:
+  google_api_key: AIzaSyAMIoydL742ROhE6lLk9n3hT0pZwbrXD_I
+  google_engine_id: 001858749347000340533:drswradlp64
   # algolia
   algolia_app_id:
   algolia_api_key:
@@ -34,7 +34,7 @@ search:
   baidu_api_id:
 
 # Miscellaneous
-google_analytics:
+google_analytics: UA-118743071-1
 favicon: /favicon.png
 author_url: https://lision.me
 
