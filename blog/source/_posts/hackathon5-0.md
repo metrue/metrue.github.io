@@ -76,7 +76,7 @@ Emmmmm... 为什么叫 Hackathon 5.0 呢？其实感觉这个就是公司内部�
 
 ## Somewhere
 
-{% asset_img somewhere_00.png %}
+{% asset_img somewhere_00.jpg %}
 
 Somewhere 译为“某处”，是我们战队这次拿来参赛的作品。它是一个将 [AR](https://en.wikipedia.org/wiki/Augmented_reality) 技术结合到地图的项目，旨在帮助用户发现值得消费时间去用心体验的地方。
 
@@ -86,7 +86,7 @@ Emmmmm... 其实关于 Somewhere 还有一个比较文艺的文案是我们当�
 
 Somewhere 参考了 [ARKit-CoreLocation](https://github.com/ProjectDent/ARKit-CoreLocation) 的实现，在其基础上做了一些优化，例如对某一方向重叠在一起的 POI AR Annotations 做了收敛以防止多个 POI AR Annotations 重叠在一起的问题。
 
-{% asset_img somewhere_01.jpeg %}
+{% asset_img somewhere_01.jpg %}
 
 可惜的是 Somewhere 只拿到了入围奖（42 进 10），确实站在评委的角度看 Somewhere 在完成度上面对比获奖作品来说差的太多了...
 
