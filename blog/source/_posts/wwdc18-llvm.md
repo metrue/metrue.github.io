@@ -157,13 +157,17 @@ Objective-C 中与 Swift 闭包对应的就是 Block 了，但是 Objective-C �
 别担心，转换过来的闭包（非逃逸）会有 Warnning 提示，而且我们说过一般这种情况下 Apple 的工程师都会在 LLVM 为 Objective-C 加一个宏来迎合 Swift...
 
 ``` objc
-// Warning for Missing Noescape Annotations for Method Overrides#import “Executor-Swift.h”@interface DispatchExecutor : NSObject<Executor>- (void) performOperation:(NS_NOESCAPE void (^)(void)) handler;@end@implementation DispatchExecutor- (void) performOperation:(NS_NOESCAPE void (^)(void)) handler {}x
+// Warning for Missing Noescape Annotations for Method Overrides#import “Executor-Swift.h”@interface DispatchExecutor : NSObject<Executor>- (void)performOperation:(NS_NOESCAPE void (^)(void))handler;@end@implementation DispatchExecutor- (void)performOperation:(NS_NOESCAPE void (^)(void))handler {}
 // Programmer must ensure that handler is not called after performOperation returns@end
 ```
 
+#### 个人观点
+
+如果 Swift 5 真的可以做到 ABI 稳定，那么 Swift 与 Objective-C 混编的 App 包大小也应该回归正常，相信很多公司的项目都会慢慢从 Objective-C 转向 Swift。在 Swift 中闭包（Closures）作为一等公民的存在奠定了 Swift 作为函数式语言的根基，本次 LLVM 提供了将 Swift 中的 Closures 与 Objective-C 中的 Block 互通转换的支持无疑是很有必要的。
+
 ### 使用 `#pragma pack` 打包 Struct 成员
 
-Emmmmm... 老实说这一节的内容更底层，所以可能会比较晦涩。在 C 语言中 struct 有 **内存布局（memory layout）** 的概念，C 语言允许编译器为每个基本类型指定一些**对齐方式**，通常情况下是以类型的大小为标准对齐，但是它是**特定于实现**的。
+Emmmmm... 老实说这一节的内容更底层，所以可能会比较晦涩，希望自己可以表述清楚吧。在 C 语言中 struct 有 **内存布局（memory layout）** 的概念，C 语言允许编译器为每个基本类型指定一些**对齐方式**，通常情况下是以类型的大小为标准对齐，但是它是**特定于实现**的。
 
 嘛~ 还是举个例子吧，就拿 WWDC18 官方演示文稿中的吧：
 
@@ -230,12 +234,137 @@ struct PackedStruct {
 
 {% asset_img pack_00.png %}
 
+#### 个人观点
+
 嘛~ 当在网络层面传输 struct 时，通过 `#pragma pack` 自定义内存布局的对齐方式可以为用户节约更多流量。
 
 ## Clang 静态分析
 
+Xcode 一直都提供静态分析器（Static Analyzer），使用 Clang Static Analyzer 可以帮助我们找出边界情况以及难以发觉的 Bug。
 
+{% asset_img static_analyzer_00.png %}
 
+点击 Product -> Analyze 或者使用快捷键 Shift+Command+B 就可以静态分析当前构建的项目了，当然也可以在项目的 Build Settings 中设置构建项目时自动执行静态分析（个人不推荐）：
 
+{% asset_img static_analyzer_01.png %}
 
+本地静态分析器有以下提升：
+
+- GCD 性能反模式
+- 自动释放变量超出自动释放池
+- 性能和可视化报告的提升
+
+### GCD 性能反模式
+
+在之前某些迫不得已的情况下，我们可能需要使用 GCD 信号（`dispatch_semaphore_t`）来阻塞某些异步操作，并将阻塞后得到的最终的结果同步返回：
+
+``` objc
+__block NSString *taskName = nil;
+dispatch_semaphore_t sema = dispatch_semaphore_create(0);
+[self.connection.remoteObjectProxy requestCurrentTaskName:^(NSString *task) {
+	taskName = task;
+	dispatch_semaphore_signal(sema);
+}];
+dispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);
+return taskName;
+```
+
+嘛~ 这样写有什么问题呢？
+
+上述代码存在通过使用异步线程执行任务来阻塞当前线程，而 Task 队列通常优先级较低，所以会导致**优先级反转**。
+
+那么 Xcode 10 之后我们应该怎么写呢？
+
+``` objc
+__block NSString *taskName = nil;
+id remoteObjectProxy = [self.connection synchronousRemoteObjectProxyWithErrorHandler:
+	^(NSError *error) { NSLog(@"Error: %@", error); }];
+[remoteObjectProxy requestCurrentTaskName:^(NSString *task) {
+	taskName = task; 
+}];
+return taskName;
+```
+
+如果可能的话，尽量使用 `synchronous` 版本的 API。或者，使用 `asynchronous` 方式的 API：
+
+``` objc
+[self.connection.remoteObjectProxy requestCurrentTaskName:^(NSString *task) { 
+	completionHandler(task);
+}];
+```
+
+可以在 build settings 下启用 GCD 性能反模式的静态分析检查：
+
+{% asset_img static_analyzer_gcd_00.png %}
+
+### 自动释放变量超出自动释放池
+
+众所周知，使用 `__autoreleasing` 修饰符修饰的变量会在自动释放池离开时被释放（release）：
+
+``` objc
+@autoreleasepool {
+	__autoreleasing NSError *err = [NSError errorWithDomain:@"domain" code:1 userInfo:nil];
+}
+```
+
+这种看似不需要我们注意的点往往就是引起程序 Crash 的隐患：
+
+``` objc- (void)findProblems:(NSArray *)arr error:(NSError **)error {
+	[arr enumerateObjectsUsingBlock:^(id value, NSUInteger idx, BOOL *stop) {
+		if ([value isEqualToString:@"problem"]) { 
+			if (error) {
+				*error = [NSError errorWithDomain:@"domain" code:1 userInfo:nil];
+			}
+		}
+	}];
+}
+```
+
+嘛~ 上述代码是会引起 Crash 的，你可以指出为什么吗？
+
+Objective-C 在 ARC（Automatic Reference Counting）下会隐式使用 `__autoreleasing` 修饰 `error`，即 `NSError *__autoreleasing*`。而 `-enumerateObjectsUsingBlock:` 内部会在迭代 `block` 时使用 `@autoreleasepool`，在迭代逻辑中这样做有助于减少内存峰值。
+
+于是 `*error` 在 `-enumerateObjectsUsingBlock:` 中被提前 release 掉了，这样在随后读取 `*error` 时会出现 crash。
+
+Xcode 10 中会给出具有针对性的静态分析警告：
+
+{% asset_img static_analyzer_autoreleasing_00.png %}
+
+正确的书写方式应该是这样的：
+
+``` objc
+- (void)findProblems:(NSArray *)arr error:(NSError *__autoreleasing*)error { 
+	__block NSError *localError;
+	[arr enumerateObjectsUsingBlock:^(id value, NSUInteger idx, BOOL *stop) {
+		if ([value isEqualToString:@"problem"]) {
+			localError = [NSError errorWithDomain:@"domain" code:1 userInfo:nil];
+		} 
+	}];
+	if (error) {
+		*error = localError;
+	} 
+}
+```
+
+> Note: 其实早在去年的 [WWDC17 Session 411 What's New in LLVM](https://developer.apple.com/videos/play/wwdc2017/411/) 中 Xcode 9 就引入了一个需要显示书写 `__autoreleasing` 的警告。
+
+### 性能和可视化报告的提升
+
+Xcode 10 中静态分析器可以以更高效的方式工作，在相同的分析时间内平均可以发现比之前增加 15% 的 Bug 数量。
+
+不仅仅是性能的提升，Xcode 10 在报告的可视化方面也有所进步。在 Xcode 9 的静态分析器报告页面有着非必要且冗长的 Error Path：
+
+{% asset_img static_analyzer_xcode_9.png %}
+
+Xcode 10 中则对其进行了优化：
+
+{% asset_img static_analyzer_xcode_10.png %}
+
+### 个人观点
+
+嘛~ 对于 Xcode 的静态分析，个人认为还是聊胜于无的。不过不建议每次构建项目时都去做静态分析，这样大大增加了构建项目的成本。
+
+个人建议在开发流程中自测完毕提交代码给组内小伙伴们 Code Review 之前做静态分析，可以避免一些 issue 的出现，也可以发现一些代码隐患。有些问题是可以使用静态分析器在提交代码之前就暴露出来的，没必要消耗组内 Code Review 的宝贵人力资源。
+
+还可以在 CI 设置每隔固定是时间间隔去跑一次静态分析，生成报表发到组内小群，根据问题指派责任人去检查是否需要修复（静态分析在比较复杂的代码结构下并不一定准确），这样定期维护从某种角度讲可以保持项目代码的健康状况。
 
