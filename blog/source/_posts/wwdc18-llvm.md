@@ -10,6 +10,8 @@ categories:
 - ios
 ---
 
+{% asset_img wwdc18.jpg %}
+
 ## 前言
 
 [LLVM](https://llvm.org/) 作为 Apple 御用的编译基础设施其重要性不言而喻，Apple 从未停止对 LLVM 的维护和更新，并且几乎在每年的 [WWDC](https://developer.apple.com/wwdc/) 中都有专门的 Session 来针对 LLVM 的新特性做介绍和讲解，刚刚过去的 WWDC18 也不例外。
@@ -309,7 +311,8 @@ return taskName;
 
 这种看似不需要我们注意的点往往就是引起程序 Crash 的隐患：
 
-``` objc- (void)findProblems:(NSArray *)arr error:(NSError **)error {
+``` objc
+- (void)findProblems:(NSArray *)arr error:(NSError **)error {
 	[arr enumerateObjectsUsingBlock:^(id value, NSUInteger idx, BOOL *stop) {
 		if ([value isEqualToString:@"problem"]) { 
 			if (error) {
@@ -318,6 +321,7 @@ return taskName;
 		}
 	}];
 }
+
 ```
 
 嘛~ 上述代码是会引起 Crash 的，你可以指出为什么吗？
@@ -423,22 +427,7 @@ Emmmmm... 这一节的内容是针对于 iMac Pro 以及 iPhone X 使用的 [指
 
 ## 总结
 
-本文梳理了 WWDC18 Session 409 What’s New in LLVM 中的内容，并分享了我个人对这些内容的拙见（我是 Lision，我现在慌得一 bi ），让我们再回头看一下本次 What’s New in LLVM 有哪些内容吧：
-
-- ARC 更新
-- - C struct 中允许使用 ARC Objective-C 对象
-- - 动态内存管理时的写法
-- Xcode 10 新增诊断
-- - Swift 与 Objective-C 互通性，将 Swift 中的闭包（Closures）导入 Objective-C
-- - 使用 `#pragma pack` 打包 Struct 成员，自定义 Struct 字节对齐方式
-- Clang 静态分析
-- - GCD 性能反模式，提供了一些同步方法
-- - 自动释放变量超出自动释放池，`NSError *__autoreleasing*` 需要注意写法
-- - 性能和可视化报告的提升
-- 增加安全性
-- - Stack Protector，Stack Canary & 局限性
-- - Stack Checking，Stack Clash
-- 新指令集扩展
+本文梳理了 WWDC18 Session 409 What’s New in LLVM 中的内容，并分享了我个人对这些内容的拙见，希望能够对各位因为种种原因还没有来得及看 WWDC18 Session 409 的同学有所帮助。
 
 文章写得比较用心（是我个人的原创文章，转载请注明 [https://lision.me/](https://lision.me/)），如果发现错误会优先在我的个人博客中更新。如果有任何问题欢迎在我的微博 [@Lision](http://weibo.com/lisioncode) 联系我~
 
