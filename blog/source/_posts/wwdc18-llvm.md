@@ -152,7 +152,7 @@ typedef struct {
 
 Objective-C 中与 Swift 闭包对应的就是 Block 了，但是 Objective-C 中的 Block 并没有诸如 Swift 中逃逸与否的限制，那么我们这样将 Swift 的非逃逸闭包转为 Objective-C 中无限制的 Block 岂不是会有问题？
 
-{% asset_img interoperability_00.png %}
+{% asset_img interoperability.png %}
 
 别担心，转换过来的闭包（非逃逸）会有 Warnning 提示，而且我们说过一般这种情况下 Apple 的工程师都会在 LLVM 为 Objective-C 加一个宏来迎合 Swift...
 
@@ -232,7 +232,7 @@ struct PackedStruct {
 
 值得一提的是，如果你使用了 `#pragma pack (push, n)` 之后忘记写 `#pragma pack (pop)` 的话，Xcode 10 会抛出 warning：
 
-{% asset_img pack_00.png %}
+{% asset_img pack.png %}
 
 #### 个人观点
 
@@ -407,7 +407,7 @@ Apple 工程师在介绍 Stack Protector 之前很贴心的带领着在场的开
 
 Stack Protector 是 Xcode 既有的、且默认开启的特性，而 Stack Checking 是 Xcode 10 引入的新特性，主要针对的是 [Stack Clash](https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt) 问题。
 
-{% stack_checking_00.png %}
+{% asset_img stack_checking_00.png %}
 
 Stack Clash 问题的产生源于 Stack 和 Heap，Stack 是**从上向下**增长的，Heap 则是**自下而上**增长的，两者相向扩展而内存又是有限的。
 
@@ -415,10 +415,31 @@ Stack Checking 的工作原理是在 Stack 区域规定合理的分界线（上�
 
 > Note: LLVM 团队在本次 WWDC18 加入 Stack Checking，大概率是因为去年年中 [Qualys](https://www.qualys.com/) 公布的一份 [关于 Stack Clash 的报告](https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt)。
 
---- 
-
-未完待续...
-
 ## 新指令集扩展
 
+{% asset_img new_instruction_set_extensions.png %}
+
+Emmmmm... 这一节的内容是针对于 iMac Pro 以及 iPhone X 使用的 [指令集架构（ISA - Instruction set architecture）](https://en.wikipedia.org/wiki/Instruction_set_architecture) 所做的扩展。坦白说，我对这块并不是很感兴趣，也没有深入的研究，所以就不献丑了...
+
 ## 总结
+
+本文梳理了 WWDC18 Session 409 What’s New in LLVM 中的内容，并分享了我个人对这些内容的拙见（我是 Lision，我现在慌得一 bi ），让我们再回头看一下本次 What’s New in LLVM 有哪些内容吧：
+
+- ARC 更新
+- - C struct 中允许使用 ARC Objective-C 对象
+- - 动态内存管理时的写法
+- Xcode 10 新增诊断
+- - Swift 与 Objective-C 互通性，将 Swift 中的闭包（Closures）导入 Objective-C
+- - 使用 `#pragma pack` 打包 Struct 成员，自定义 Struct 字节对齐方式
+- Clang 静态分析
+- - GCD 性能反模式，提供了一些同步方法
+- - 自动释放变量超出自动释放池，`NSError *__autoreleasing*` 需要注意写法
+- - 性能和可视化报告的提升
+- 增加安全性
+- - Stack Protector，Stack Canary & 局限性
+- - Stack Checking，Stack Clash
+- 新指令集扩展
+
+文章写得比较用心（是我个人的原创文章，转载请注明 [https://lision.me/](https://lision.me/)），如果发现错误会优先在我的个人博客中更新。如果有任何问题欢迎在我的微博 [@Lision](http://weibo.com/lisioncode) 联系我~
+
+希望我的文章可以为你带来价值~
