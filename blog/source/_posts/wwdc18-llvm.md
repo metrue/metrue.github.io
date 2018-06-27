@@ -368,11 +368,56 @@ Xcode 10 中则对其进行了优化：
 
 还可以在 CI 设置每隔固定是时间间隔去跑一次静态分析，生成报表发到组内小群，根据问题指派责任人去检查是否需要修复（静态分析在比较复杂的代码结构下并不一定准确），这样定期维护从某种角度讲可以保持项目代码的健康状况。
 
----
-
-未完待续
-
 ## 增加安全性
+
+### Stack Protector
+
+Apple 工程师在介绍 Stack Protector 之前很贴心的带领着在场的开发者们复习了一遍栈 Stack 相关的基础知识：
+
+{% asset_img stack_protector_00.png %}
+
+如上图，其实就是简单的讲了一下 Stack 的工作方式，如栈帧结构以及函数调用时栈的展开等。每一级的方法调用，都对应了一张相关的活动记录，也被称为**活动帧**。函数的调用栈是由一张张帧结构组成的，所以也称之为**栈帧**。
+
+我们可以看到，栈帧中包含着 **Return Address**，也就是当前活动记录执行结束后要返回的地址。
+
+那么会有什么安全性问题呢？Apple 工程师接着介绍了通过不正当手段修改栈帧 Return Address 从而实现的一些权限提升。嘛~ 也就是历史悠久的 [缓冲区溢出攻击](http://www.cis.syr.edu/~wedu/Teaching/CompSec/LectureNotes_New/Buffer_Overflow.pdf)。
+
+{% asset_img stack_protector_01.png %}
+
+当使用 C 语言中一些不太安全的函数时（比如上图的 `strcpy()`），就有可能造成缓冲区溢出。
+
+> Note: `strcpy()` 函数将源字符串复制到指定缓冲区中。但是丫没有指定要复制字符的具体数目！如果源字符串碰巧来自用户输入，且没有专门限制其大小，则有可能会造成**缓冲区溢出**！
+
+针对缓冲区溢出攻击，LLVM 引入了一块额外的区域（下图绿色区域）来作为栈帧 Return Address 的**护城河**，叫做 Stack Canary，已默认启用：
+
+{% asset_img stack_protector_02.png %}
+
+> Note: Canary 译为 “金丝雀”，Stack Canary 的命名源于早期煤矿工人下矿坑时会携带金丝雀来检测矿坑内一氧化碳是否达到危险值，从而判断是否需要逃生。
+
+根据我们上面对缓冲区溢出攻击的原理分析，大家应该很容易发现 Stack Canary 的防御原理，即缓冲区溢出攻击旨在利用缓冲区溢出来篡改栈帧的 Return Address，加入了 Stack Canary 之后想要篡改 Return Address 就必然会经过 Stack Canary，在当前栈帧执行结束后要使用 Return Address 回溯时先检测 Stack Canary 是否有变动，如果有就调用 `abort()` 强制退出。
+
+嘛~ 是不是和矿坑中的金丝雀很像呢？
+
+不过 Stack Canary 存在一些局限性：
+
+- 可以在缓冲区溢出攻击时计算 Canary 的区域并伪装 Canary 区域的值，使得 Return Address 被篡改的同时 Canary 区域内容无变化，绕过检测。
+- 再粗暴一点的话，可以通过双重 `strcpy()` 覆写任意不受内存保护的数据，通过构建合适的溢出字符串，可以达到修改 ELF（Executable and Linking Format）映射的 GOT（Global Offset Table），只要修改了 GOT 中的 `_exit()` 入口，即便 Canary 检测到了篡改，函数返回前调用 `abort()` 退出还是会走已经被篡改了的 `_exit()`。
+
+### Stack Checking
+
+Stack Protector 是 Xcode 既有的、且默认开启的特性，而 Stack Checking 是 Xcode 10 引入的新特性，主要针对的是 [Stack Clash](https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt) 问题。
+
+{% stack_checking_00.png %}
+
+Stack Clash 问题的产生源于 Stack 和 Heap，Stack 是**从上向下**增长的，Heap 则是**自下而上**增长的，两者相向扩展而内存又是有限的。
+
+Stack Checking 的工作原理是在 Stack 区域规定合理的分界线（上图红线），在可变长度缓冲区的函数内部对将要分配的缓冲区大小做校验，如果缓冲区超出分界线则调用 `abort()` 强制退出。
+
+> Note: LLVM 团队在本次 WWDC18 加入 Stack Checking，大概率是因为去年年中 [Qualys](https://www.qualys.com/) 公布的一份 [关于 Stack Clash 的报告](https://www.qualys.com/2017/06/19/stack-clash/stack-clash.txt)。
+
+--- 
+
+未完待续...
 
 ## 新指令集扩展
 
