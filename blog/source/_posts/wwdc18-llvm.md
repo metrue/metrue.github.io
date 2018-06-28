@@ -244,11 +244,11 @@ struct PackedStruct {
 
 Xcode 一直都提供静态分析器（Static Analyzer），使用 Clang Static Analyzer 可以帮助我们找出边界情况以及难以发觉的 Bug。
 
-{% asset_img static_analyzer_00.png %}
+{% asset_img static_analyzer_00.jpg %}
 
 点击 Product -> Analyze 或者使用快捷键 Shift+Command+B 就可以静态分析当前构建的项目了，当然也可以在项目的 Build Settings 中设置构建项目时自动执行静态分析（个人不推荐）：
 
-{% asset_img static_analyzer_01.png %}
+{% asset_img static_analyzer_01.jpg %}
 
 本地静态分析器有以下提升：
 
@@ -358,11 +358,11 @@ Xcode 10 中静态分析器可以以更高效的方式工作，在相同的分�
 
 不仅仅是性能的提升，Xcode 10 在报告的可视化方面也有所进步。在 Xcode 9 的静态分析器报告页面有着非必要且冗长的 Error Path：
 
-{% asset_img static_analyzer_xcode_9.png %}
+{% asset_img static_analyzer_xcode_9.jpg %}
 
 Xcode 10 中则对其进行了优化：
 
-{% asset_img static_analyzer_xcode_10.png %}
+{% asset_img static_analyzer_xcode_10.jpg %}
 
 ### 个人观点
 
