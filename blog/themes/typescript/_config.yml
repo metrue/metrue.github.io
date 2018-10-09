@@ -5,13 +5,13 @@ site_desc: otaku's self-cultivation
 
 # Navigation
 navigation:
-- name: Home
+- name: 首页
   slug: home
   url: /
-- name: Archives
+- name: 归档
   slug: archives
   url: /archives
-- name: About
+- name: 关于
   slug: about
   url: https://github.com/Lision
 
