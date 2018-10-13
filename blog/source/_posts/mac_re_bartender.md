@@ -383,7 +383,7 @@ void sub_1000230e0(int arg0) {
 
 老规矩，导出二进制文件覆盖 Bartender 中的二进制后重启 Bartender 验收成果。
 
-{% asset_img bartender_valid.jpg %}
+{% asset_img bartender_valid.png %}
 
 清爽~ 这次运行 Bartender 发现不但可以正常使用功能，之前烦人的试用期到期弹窗也被我们成功干掉了。
 
