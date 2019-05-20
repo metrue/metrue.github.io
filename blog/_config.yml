@@ -3,20 +3,20 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 聊宅
-subtitle: 渴望被關進一間充滿漫畫 & 代碼的小黑屋
-description: 美麗的太陽照常升起 苦痛的人們依舊歇斯底裏
-keywords: ios,objective-c,swift,python,javascript,otaku,lision
-author: Lision
+title: Minghe 的小本子
+subtitle:
+description:
+keywords: Golang,Docker,Kubernetes,K8S,Cloud Native,Cloud,
+author: Minghe
 language: zh-cn
 timezone: UTC
 
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
-url: https://lision.me
+url: https://blog.minghe.me
 root: /
 permalink: :title/
-permalink_defaults: 
+permalink_defaults:
 
 # Directory
 source_dir: source
@@ -26,7 +26,7 @@ archive_dir: archives
 category_dir: categories
 code_dir: downloads/code
 i18n_dir: :lang
-skip_render: 
+skip_render:
 
 # Writing
 new_post_name: :title.md # File name of new posts
@@ -43,7 +43,7 @@ highlight:
   line_number: true
   auto_detect: false
   tab_replace:
-  
+
 # Home page setting
 # path: Root path for your blogs index page. (default = '')
 # per_page: Posts displayed per page. (0 = disable pagination)
@@ -52,7 +52,7 @@ index_generator:
   path: ''
   per_page: 1
   order_by: -date
-  
+
 # Category & Tag
 default_category: uncategorized
 category_map:
@@ -77,9 +77,9 @@ theme: typescript
 
 # Deployment
 ## Docs: https://hexo.io/docs/deployment.html
-deploy: 
+deploy:
   type: git
-  repo: git@github.com:Lision/Lision.github.io.git
+  repo: git@github.com:metrue/metrue.github.io.git
   branch: master
   message: Boo!
 
@@ -119,22 +119,4 @@ jsonContent:
     tags: false
 
 # Disqus
-disqus_shortname: lision-me
-
-# Live 2D
-live2d:
-  enable: true
-  scriptFrom: local
-  pluginRootPath: live2dw/
-  pluginJsPath: lib/
-  pluginModelPath: assets/
-  tagMode: false
-  debug: false
-  model:
-    use: live2d-widget-model-shizuku
-  display:
-    position: right
-    width: 120
-    height: 240
-  mobile:
-    show: false
+disqus_shortname: huangminghe

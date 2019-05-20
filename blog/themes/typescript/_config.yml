@@ -1,7 +1,7 @@
 # Meta
-description: 美麗的太陽照常升起 苦痛的人們依舊歇斯底裏
-keywords: ios,objective-c,swift,python,javascript,otaku,lision
-site_desc: otaku's self-cultivation
+description:
+keywords:
+site_desc:
 
 # Navigation
 navigation:
@@ -13,13 +13,13 @@ navigation:
   url: /archives
 - name: 关于
   slug: about
-  url: https://github.com/Lision
+  url: https://github.com/metrue
 
 # Search
-search: 
+search:
   enable: true
   service: google # google/hexo/algolia/azure/baidu
-  # google 
+  # google
   google_api_key: AIzaSyAMIoydL742ROhE6lLk9n3hT0pZwbrXD_I
   google_engine_id: 001858749347000340533:drswradlp64
   # algolia
@@ -45,21 +45,17 @@ less:
 # use url, not username
 social:
 - slug: email
-  url: mailto:lisionmail@gmail.com
+  url: mailto:h.minghe@gmail.com
 - slug: github
-  url: https://github.com/Lision
+  url: https://github.com/metrue
 - slug: twitter
-  url: https://twitter.com/LisionChat
+  url: https://twitter.com/_metrue
 - slug: rss
-	url: # /atom.xml
-- slug: google
-  url: # https://plus.google.com/+ArtChenOtakism/posts
-- slug: facebook
-  url: # https://www.facebook.com/zanchoret
+	url:  /atom.xml
 - slug: linkedin
-  url: # https://www.linkedin.com/in/buzun
+  url:  https://www.linkedin.com/in/huang-minghe-41ab563a/
 - slug: sina-weibo
-  url: https://weibo.com/lisioncode
+  url: https://weibo.com/metrue
 - slug: tumblr
   url: # http://artchen.tumblr.com
 - slug: dribbble
