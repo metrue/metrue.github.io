@@ -16,6 +16,7 @@ ADD blog /hexo
 # Install Hexo
 RUN npm install hexo-cli -g
 RUN npm install
+RUN hexo generate
 
 
 EXPOSE 4000
