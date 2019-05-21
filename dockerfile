@@ -8,14 +8,15 @@ RUN apt-get update && apt-get install -y git ssh-client rsync --no-install-recom
 # Change timezone to China Standard Time
 RUN echo "Asia/Shanghai" > /etc/timezone && dpkg-reconfigure -f noninteractive tzdata
 
-# Install Hexo
-RUN npm install hexo-cli -g
-
 # Prepare work directory
 RUN mkdir /hexo
 WORKDIR /hexo
 
 ADD blog /hexo
+# Install Hexo
+RUN npm install hexo-cli -g
+RUN npm install
+
 
 EXPOSE 4000
 
