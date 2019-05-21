@@ -1,6 +1,6 @@
 workflow "build and push to dockerhub" {
   on = "push"
-  resolves = ["login", "build", "push"]
+  resolves = ["login", "build", "push", "notify"]
 }
 
 action "login" {
@@ -18,4 +18,10 @@ action "push" {
   uses = "actions/docker/cli@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
   args = "push metrue/blog:latest"
+}
+
+action "notify" {
+  needs = ["build", "push"]
+  uses = "actions/bin/curl@master"
+  args = ["https://dev.pubhub.minghe.me/notifications/f49d4bae-9f60-44db-8062-968b4dec650d/create\?title=GitHub\&body\=BuildOK\&category\=CICD"]
 }
