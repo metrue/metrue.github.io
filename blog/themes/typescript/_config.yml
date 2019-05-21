@@ -17,7 +17,7 @@ navigation:
 
 # Search
 search:
-  enable: true
+  enable: false
   service: google # google/hexo/algolia/azure/baidu
   # google
   google_api_key: AIzaSyAMIoydL742ROhE6lLk9n3hT0pZwbrXD_I
@@ -36,7 +36,7 @@ search:
 # Miscellaneous
 google_analytics: UA-118743071-1
 favicon: /favicon.png
-author_url: https://lision.me
+author_url: https://minghe.me
 
 # Less
 less:
@@ -51,7 +51,7 @@ social:
 - slug: twitter
   url: https://twitter.com/_metrue
 - slug: rss
-	url:  /atom.xml
+	# url:  /atom.xml
 - slug: linkedin
   url:  https://www.linkedin.com/in/huang-minghe-41ab563a/
 - slug: sina-weibo
